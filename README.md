@@ -63,7 +63,6 @@ There is a script for the cleanup, if you want to run it, again give it the perm
 chmod +x cleanup.sh
 
 # run everything
-
 ./cleanup.sh
 
 ```
@@ -88,6 +87,41 @@ Finally run the run script, then see the results:
 # see the output
 less comparison.txt
 ```
+
+### Data retrieval
+
+To retrive the data to further analize it there is a script `getdata.sh`, it just runs many times the program (so you'll get udp data if in the main there is the udp function uncommented, or viceversa).
+To run it just do:
+
+```bash
+# make the script runnable
+chmod +x getdata.sh
+
+# run everything
+./getdata.sh
+```
+
+NOTE: you might see errors output in the script, this is due the small time in between the execution of the program.
+_This wont result in any error in the data files_
+
+All the data will be saved in the `data` directory:
+
+```txt
+...
+├── data
+│   ├── tcp_receiver.txt
+│   ├── tcp_sender.txt
+│   ├── udp_receiver.txt
+│   └── udp_sender.txt
+├── getdata.sh
+...
+```
+
+NOTE: the files in the `data` directory, after the repo clone, have from default the result of the benchmark on my machine.
+
+### Data analysis
+
+// TODO
 
 ## Requirements
 

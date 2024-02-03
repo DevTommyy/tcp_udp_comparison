@@ -1,6 +1,8 @@
 use std::{
-    io::{BufRead, BufReader},
+    fs,
+    io::{BufRead, BufReader, Write},
     net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener, UdpSocket},
+    time::Instant,
 };
 
 #[allow(dead_code)]
@@ -10,6 +12,8 @@ use std::{
 ///
 /// If any error occurs in the IO operation is catched with the `?` operation and propagated to the main
 fn udp_test(ip: SocketAddr) -> std::io::Result<()> {
+    let start = Instant::now();
+
     let socket = UdpSocket::bind(ip)?;
     let mut buf = [0u8; 32];
 
@@ -24,6 +28,13 @@ fn udp_test(ip: SocketAddr) -> std::io::Result<()> {
         // Overwrite the buffer resetting it
         buf = [0u8; 32];
     }
+    // register the time that the function took and writes it to a file
+    let elapsed = start.elapsed();
+    let mut file = fs::OpenOptions::new()
+        .append(true)
+        .open("../data/udp_receiver.txt")?;
+    file.write_all(format!("{elapsed:?}\n").as_bytes())?;
+
     Ok(())
 }
 
@@ -34,6 +45,8 @@ fn udp_test(ip: SocketAddr) -> std::io::Result<()> {
 ///
 /// If any error occurs in the IO operation is catched with the `?` operation and propagated to the main
 fn tcp_test(ip: SocketAddr) -> std::io::Result<()> {
+    let start = Instant::now();
+
     let listener = TcpListener::bind(ip)?;
 
     let (stream, _addr) = listener.accept()?;
@@ -52,13 +65,17 @@ fn tcp_test(ip: SocketAddr) -> std::io::Result<()> {
 
         println!("{}", trimmed_str);
     }
-
+    // register the time that the function took and writes it to a file
+    let elapsed = start.elapsed();
+    let mut file = fs::OpenOptions::new()
+        .append(true)
+        .open("../data/tcp_receiver.txt")?;
+    file.write_all(format!("{elapsed:?}\n").as_bytes())?;
     Ok(())
 }
 
 fn main() -> std::io::Result<()> {
     let self_ip = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 9999);
-    udp_test(self_ip)
-
-    // tcp_test(self_ip)
+    // udp_test(self_ip)
+    tcp_test(self_ip)
 }

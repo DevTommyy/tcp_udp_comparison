@@ -2,6 +2,7 @@ use std::{
     fs,
     io::Write,
     net::{IpAddr, Ipv4Addr, SocketAddr, TcpStream, UdpSocket},
+    time::Instant,
 };
 
 #[allow(dead_code)]
@@ -11,6 +12,8 @@ use std::{
 ///
 /// If any error occurs in the IO operation is catched with the `?` operand and the program is exited early.
 fn send_udp(ip: SocketAddr) -> std::io::Result<()> {
+    let start = Instant::now();
+
     let self_ip = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 8888);
 
     let socket = UdpSocket::bind(self_ip)?;
@@ -23,6 +26,11 @@ fn send_udp(ip: SocketAddr) -> std::io::Result<()> {
     // Sending the EOF to make the reciver stop
     socket.send_to("\0".as_bytes(), ip)?;
 
+    let elapsed = start.elapsed();
+    let mut file = fs::OpenOptions::new()
+        .append(true)
+        .open("../data/udp_sender.txt")?;
+    file.write_all(format!("{elapsed:?}\n").as_bytes())?;
     Ok(())
 }
 
@@ -33,6 +41,8 @@ fn send_udp(ip: SocketAddr) -> std::io::Result<()> {
 ///
 /// If any error occurs in the IO operation is catched with the `?` operand and the program is exited early.
 fn send_tcp(ip: SocketAddr) -> std::io::Result<()> {
+    let start = Instant::now();
+
     let mut stream = TcpStream::connect(ip)?;
 
     // NOTE: the file is 100k lines
@@ -44,11 +54,16 @@ fn send_tcp(ip: SocketAddr) -> std::io::Result<()> {
     // Sending the EOF to make the receiver stop
     stream.write_all(b"\0")?;
 
+    let elapsed = start.elapsed();
+    let mut file = fs::OpenOptions::new()
+        .append(true)
+        .open("../data/tcp_sender.txt")?;
+    file.write_all(format!("{elapsed:?}\n").as_bytes())?;
     Ok(())
 }
 
 fn main() -> std::io::Result<()> {
     let target_ip = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 9999);
-    send_udp(target_ip)
-    // send_tcp(target_ip)
+    // send_udp(target_ip)
+    send_tcp(target_ip)
 }
