@@ -43,6 +43,6 @@ cd ..
 wait
 
 # Compare files
-compare_files receiver/output.txt sender/input.txt > ../comparison.txt
+compare_files ./receiver/output.txt ./sender/input.txt > ./comparison.txt
 
 echo "Comparison completed and saved to comparison.txt"
