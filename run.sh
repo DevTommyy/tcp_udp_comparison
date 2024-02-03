@@ -20,11 +20,11 @@ cd "$(dirname "$0")" || exit
 
 # Compile sender and receiver
 cd sender || exit
-cargo build &
+cargo build --release &
 cd ..
 
 cd receiver || exit
-cargo build &
+cargo build --release &
 cd ..
 
 # Wait for sender and receiver programs to finish compiling
@@ -32,17 +32,17 @@ wait
 
 # Run sender and receiver
 cd receiver || exit
-./target/debug/second_peer > output.txt &
+./target/release/second_peer > output.txt &
 cd ..
 
 cd sender || exit
-./target/debug/first_peer &
+./target/release/first_peer &
 cd ..
 
 # Wait for sender and receiver programs to finish running
 wait
 
 # Compare files
-compare_files receiver/output.txt sender/input.txt > comparison.txt
+compare_files receiver/output.txt sender/input.txt > ../comparison.txt
 
 echo "Comparison completed and saved to comparison.txt"
