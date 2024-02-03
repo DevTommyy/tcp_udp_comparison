@@ -29,7 +29,7 @@ plt.subplot(1, 2, 1)
 plt.plot(tcp_sender_data, color='blue', label='TCP Sender')
 plt.plot(udp_sender_data, color='green', label='UDP Sender')
 plt.title('Comparison of Sender Data')
-plt.xlabel('Data Points')
+plt.xlabel('Iterations')
 plt.ylabel('Time (ms)')
 plt.legend()
 
@@ -38,9 +38,10 @@ plt.subplot(1, 2, 2)
 plt.plot(tcp_receiver_data, color='red', label='TCP Receiver')
 plt.plot(udp_receiver_data, color='orange', label='UDP Receiver')
 plt.title('Comparison of Receiver Data')
-plt.xlabel('Data Points')
+plt.xlabel('Iterations')
 plt.ylabel('Time (ms)')
 plt.legend()
 
-plt.savefig("./data/data_plot.png")  # Save the figure to a file instead of displaying
+# Save the image to a file
+plt.savefig("./data/data_plot.png") 
 plt.close()

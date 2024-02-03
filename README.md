@@ -1,4 +1,4 @@
-Comparison between `TCP` and `UDP` packet loss.
+Comparison between `TCP` and `UDP` speeds and packet loss with data visualization too.
 
 # Usage
 
@@ -133,9 +133,38 @@ All the data will be saved in the `data` directory:
 
 NOTE: the files in the `data` directory, after the repo clone, have from default the result of the benchmark on my machine.
 
+Also, if you are testing UDP, you can run the script `./getloss.sh` that mostly works as the `getdata.sh` one (but is more sketchy, and freezes frequently) to get the data to plot the packets lost.
+
+```bash
+# make the script runnable
+chmod +x getloss.sh
+
+# run everything 10 times
+./getloss.sh 10
+```
+
 ### Data analysis
 
-// TODO
+To plot the data obtained, you can simply run
+
+```bash
+# note that the python interpreter may vary based on your config
+python3 data/visualize_data.py
+```
+
+For packets loss we can use:
+
+```bash
+# note that the python interpreter may vary based on your config
+python3 data/visualize_loss.py
+```
+
+This will save the plot as an `.png` image in the `data` directory.
+The `requirements` for this are:
+
+- `python` installed
+- `pip` installed
+- `matplotlib` package installed with pip
 
 ## Requirements
 
@@ -147,3 +176,13 @@ To install it in a Unix based sysem:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ```
+
+## Results on my machine
+
+As for the data the result are (I am surprised to see that the UDP Sender takes this much more time):
+
+![Image Alt Text](./data/data_plot.png)
+
+For the packet loss when using `UDP`:
+
+![Image Alt Text](./data/loss_plot.png)
