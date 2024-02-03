@@ -2,6 +2,8 @@ Comparison between `TCP` and `UDP` packet loss.
 
 # Usage
 
+### Installation
+
 To run everything in a Unix based system open the shell and do:
 
 ```bash
@@ -26,7 +28,7 @@ Comparison completed and saved to comparison.txt
 then you can just open the file with a text editor or cat it:
 
 ```bash
-cat comparison.txt
+less comparison.txt
 ```
 
 ### Sample output
@@ -49,6 +51,42 @@ Here are the differences:
 > abiliterai
 > abiliteremmo
 ...
+
+```
+
+### Cleanup
+
+There is a script for the cleanup, if you want to run it, again give it the permission and then run it, it will `cargo clean` both directories
+
+```bash
+# make the script runnable
+chmod +x cleanup.sh
+
+# run everything
+
+./cleanup.sh
+
+```
+
+# Note
+
+The test only occurs for one protocol out of time (either `TCP` or `UDP`), so to test the other open the project in your editor of choice
+e.g.
+
+```bash
+# if you have visual studio code cli utility installed
+code .
+```
+
+then go to `receiver/src/main.rs` and `sender/src/main.rs` and in the `main` function uncomment the wanted protocol and comment the other (it's just commenting and uncommenting a line).
+Finally run the run script, then see the results:
+
+```bash
+# run everything
+./run.sh
+
+# see the output
+less comparison.txt
 ```
 
 ## Requirements
