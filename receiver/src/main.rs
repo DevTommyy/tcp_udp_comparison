@@ -76,6 +76,6 @@ fn tcp_test(ip: SocketAddr) -> std::io::Result<()> {
 
 fn main() -> std::io::Result<()> {
     let self_ip = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 9999);
-    // udp_test(self_ip)
-    tcp_test(self_ip)
+    udp_test(self_ip)
+    // tcp_test(self_ip)
 }

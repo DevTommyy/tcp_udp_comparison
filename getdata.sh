@@ -1,8 +1,24 @@
 #!/bin/bash
 
-# this takes approximately 40 seconds at least
+# NOTE this takes approximately 40 seconds at least
 
-for ((i = 0; i < 100; i++)); do
+# Compile sender and receiver
+cd sender || exit
+cargo build --release &
+cd ..
+
+cd receiver || exit
+cargo build --release &
+cd ..
+
+# Wait for sender and receiver programs to finish compiling
+wait
+
+# Set the number of iterations based on the first argument or default to 100
+iterations=${1:-100}
+
+
+for ((i = 0; i < iterations; i++)); do
     echo "Iteration: $i"
 
     # Run sender and receiver

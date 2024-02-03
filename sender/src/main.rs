@@ -64,6 +64,6 @@ fn send_tcp(ip: SocketAddr) -> std::io::Result<()> {
 
 fn main() -> std::io::Result<()> {
     let target_ip = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 9999);
-    // send_udp(target_ip)
-    send_tcp(target_ip)
+    send_udp(target_ip)
+    // send_tcp(target_ip)
 }

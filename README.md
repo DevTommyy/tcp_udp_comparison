@@ -88,6 +88,8 @@ Finally run the run script, then see the results:
 less comparison.txt
 ```
 
+# Data
+
 ### Data retrieval
 
 To retrive the data to further analize it there is a script `getdata.sh`, it just runs many times the program (so you'll get udp data if in the main there is the udp function uncommented, or viceversa).
@@ -101,8 +103,20 @@ chmod +x getdata.sh
 ./getdata.sh
 ```
 
+The script also has an additional flag which represents the number of iterations to do, the default is 100, it can be passed when you run the script, like this:
+
+```bash
+# make the script runnable
+chmod +x getdata.sh
+
+# run everything 20 times
+./getdata.sh 20
+```
+
+This can be useful if the program fails to run n times, but you want the data so you run it another `n` times.
+
 NOTE: you might see errors output in the script, this is due the small time in between the execution of the program.
-_This wont result in any error in the data files_
+_This wont result in any error in the data files_.
 
 All the data will be saved in the `data` directory:
 
