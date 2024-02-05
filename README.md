@@ -8,8 +8,8 @@ To run everything in a Unix based system open the shell and do:
 
 ```bash
 # clone the repository
-git clone https://github.com/DevTommyy/udp_test.git
-cd udp_test
+git clone https://github.com/DevTommyy/tcp_udp_comparison.git
+cd tcp_udp_comparison
 
 # make the utility script runnable
 chmod +x runner.sh
