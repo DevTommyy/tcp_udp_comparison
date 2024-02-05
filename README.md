@@ -11,18 +11,18 @@ To run everything in a Unix based system open the shell and do:
 git clone https://github.com/DevTommyy/udp_test.git
 cd udp_test
 
-# make the script runnable
-chmod +x run.sh
+# make the utility script runnable
+chmod +x runner.sh
 
-# run everything
-./run.sh
+# run some action like
+./runner.sh run
 ```
 
 You'll see something like
 
 ```txt
 `some cargo things...`
-Comparison completed and saved to comparison.txt
+Run finished, comparison saved to comparison.txt
 ```
 
 then you can just open the file with a text editor or cat it:
@@ -54,17 +54,18 @@ Here are the differences:
 
 ```
 
-### Cleanup
+### Utility script
 
-There is a script for the cleanup, if you want to run it, again give it the permission and then run it, it will `cargo clean` both directories
+The list of action aviable of the `runner.sh` script can be seen running:
 
 ```bash
-# make the script runnable
-chmod +x cleanup.sh
+./runner.sh help
+```
 
-# run everything
-./cleanup.sh
+If furthermore help for each action is needed there is a help option for each action that can be run just like this:
 
+```bash
+./runner.sh `[action]` help
 ```
 
 # Note
@@ -82,7 +83,7 @@ Finally run the run script, then see the results:
 
 ```bash
 # run everything
-./run.sh
+./runner.sh run
 
 # see the output
 less comparison.txt
@@ -92,25 +93,19 @@ less comparison.txt
 
 ### Data retrieval
 
-To retrive the data to further analize it there is a script `getdata.sh`, it just runs many times the program (so you'll get udp data if in the main there is the udp function uncommented, or viceversa).
+To retrive the data to further analize it there is an action of the utility script `getdata`, it just runs many times the program (so you'll get udp data if in the main there is the udp function uncommented, or viceversa).
 To run it just do:
 
 ```bash
-# make the script runnable
-chmod +x getdata.sh
-
-# run everything
-./getdata.sh
+# run getdata action with the default 100 iterations
+./runner.sh getdata
 ```
 
-The script also has an additional flag which represents the number of iterations to do, the default is 100, it can be passed when you run the script, like this:
+The action also has an additional flag which represents the number of iterations to do, the default is 100, it can be passed when you run the script, like this:
 
 ```bash
-# make the script runnable
-chmod +x getdata.sh
-
-# run everything 20 times
-./getdata.sh 20
+# this will iterate only 20 times
+./runner.sh getdata 20
 ```
 
 This can be useful if the program fails to run n times, but you want the data so you run it another `n` times.
@@ -127,20 +122,24 @@ All the data will be saved in the `data` directory:
 │   ├── tcp_sender.txt
 │   ├── udp_receiver.txt
 │   └── udp_sender.txt
-├── getdata.sh
+├── runner.sh
 ...
 ```
 
 NOTE: the files in the `data` directory, after the repo clone, have from default the result of the benchmark on my machine.
 
-Also, if you are testing UDP, you can run the script `./getloss.sh` that mostly works as the `getdata.sh` one (but is more sketchy, and freezes frequently) to get the data to plot the packets lost.
+Also, if you are testing UDP, you can run the action `./runner.sh getloss` that mostly works as the `getdata` action (but is more sketchy, and freezes frequently). This is useful to get the data for the packet loss to plot it.
 
 ```bash
-# make the script runnable
-chmod +x getloss.sh
+# run getloss action with the default 100 iterations
+./runner.sh getloss
+```
 
-# run everything 10 times
-./getloss.sh 10
+As for the `getdata` action, this action too has a flag representing the number of iteration to do:
+
+```bash
+# run getloss action with 10 iterations
+./runner.sh getdata 10
 ```
 
 ### Data analysis
