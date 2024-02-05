@@ -1,7 +1,6 @@
 #!/bin/zsh
 
-compare_files () 
-{ 
+compare_files() { 
     if [ $# -ne 2 ]; then
         echo "Usage: compare_files file1 file2";
         return 1;
