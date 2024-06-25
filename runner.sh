@@ -101,10 +101,10 @@ getloss() {
     for ((i = 0; i < iterations; i++)); do
         echo "Iteration: $((i + 1))"
         # Run sender and receiver
-        (cd receiver && cargo run --release > output.txt) &
+        (cd receiver && cargo run --release -q > output.txt) &
         RECEIVER_PID=$!
         
-        (cd sender && cargo run --release) &
+        (cd sender && cargo run --release -q) &
         SENDER_PID=$!
 
         # Wait for sender and receiver programs to finish running
